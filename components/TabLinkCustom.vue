@@ -26,8 +26,8 @@ const api = await process.env.API
 const { index } = defineProps<{
   index?: string,
 }>()
-const url = ref<string>("https://vuejs.org/guide/components/v-model")
-const content = ref<string>("wewewe")
+const url = ref<string>("")
+const content = ref<string>("")
 const loading = ref<boolean | null>(null)
 
 

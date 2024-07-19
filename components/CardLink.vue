@@ -7,7 +7,7 @@
       </div>
     </template>
     <template #content>
-      <p class="border-[1px] border-gray-600 rounded-sm px-4 py-2">{{ config.public.BASE_URL }}{{
+      <p class="border-[1px] border-gray-600 rounded-sm px-4 py-2">{{ config.public.BASE_URL }}/{{
     modelValue.content }}
         <button :class="listIcon[statusIcon]" @click="copyURL" />
       </p>
@@ -28,7 +28,7 @@ async function copyURL() {
   try {
     statusIcon.value = 1
     await promiseTimeout(200)
-    await navigator.clipboard.writeText(config.public.BASE_URL + model.value.content);
+    await navigator.clipboard.writeText(config.public.BASE_URL +"/"+ model.value.content);
     statusIcon.value = 2
     await promiseTimeout(800)
     statusIcon.value = 0

@@ -40,13 +40,13 @@ async function createLink() {
     loading.value = false
   } else {
     loading.value = true
-    const link = await $fetch(`${config.public.API_BASE_URL}/api/link/random`, {
+    const link = await $fetch(`/api/link/random`, {
       method: 'POST',
       body: { redirect: url.value }
     })
     loading.value = false
-    model.value = link?.data
-    toast.add({ severity: 'success', summary: 'Sucesso', detail: link?.message, life: 3150 })
+    model.value = link
+    toast.add({ severity: 'success', summary: 'Sucesso', detail: link?.content, life: 3150 })
   }
 }
 </script>

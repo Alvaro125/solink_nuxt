@@ -7,11 +7,11 @@
       </div>
     </template>
     <template #content>
-      <p class="border-[1px] border-gray-600 rounded-sm px-4 py-2">{{ config.public.BASE_URL }}/{{
+      <p class="border-[1px] border-gray-600 rounded-sm px-4 py-2">{{ url }}/{{
     modelValue.content }}
         <button :class="listIcon[statusIcon]" @click="copyURL" />
       </p>
-      <Small class="px-4 italic">{{ modelValue.redirect }}</Small>
+      <small class="px-4 italic">{{ modelValue.redirect }}</small>
     </template>
   </Card>
 </template>
@@ -20,15 +20,17 @@
 import { useToast } from "primevue/usetoast";
 import { promiseTimeout } from '@vueuse/core'
 const toast = useToast();
+const route = useRouter()
 const statusIcon = ref<number>(0)
 const listIcon = ref<string[]>(["pi pi-copy", "pi pi-spin pi-cog", "pi pi-file-check text-green-600"])
 const config = useRuntimeConfig()
-const model = defineModel()
+const url = ref<string>('')
+const model = defineModel<any>()
 async function copyURL() {
   try {
     statusIcon.value = 1
     await promiseTimeout(200)
-    await navigator.clipboard.writeText(config.public.BASE_URL +"/"+ model.value.content);
+    await navigator.clipboard.writeText(url.value +"/"+ model.value.content);
     statusIcon.value = 2
     await promiseTimeout(800)
     statusIcon.value = 0
@@ -39,6 +41,9 @@ async function copyURL() {
 async function close() {
   model.value = null
 }
+onMounted(async ()=>{
+  url.value = window.location.protocol + '//' + window.location.hostname
+})
 </script>
 
 <style></style>

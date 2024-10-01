@@ -1,24 +1,21 @@
 <template>
   <div>
-    ...redirecionando
-    {{ data }}
+    ...redirecionando para
+    {{ redirect }}
   </div>
 </template>
 
 <script setup lang="ts">
 const route = useRoute()
-const config = useRuntimeConfig()
-const api = await process.env.API
-//`${api}/api/link?redirect=${route.params.slug}`
-const { data, status, error, refresh, clear,execute } = await useAsyncData(
-  'link',
-  () => $fetch(`${config.public.API_BASE_URL}/api/link?redirect=${route.params.slug}`)
-)
-await execute()
-watch(data, async (_data) => {
-  console.log(data.value.data.redirect)
-  await navigateTo(data.value.data.redirect, {
-    external: true
+const redirect = ref<string>('vazio')
+onMounted(async ()=>{
+  const data:any = await $fetch(`/api/link`,{
+    method: "GET",
+    query:{
+      redirect :route.params.slug
+    }
   })
-},{immediate: true})
+  redirect.value = data.redirect
+  await navigateTo( data.redirect as string,{external:true})
+})
 </script>

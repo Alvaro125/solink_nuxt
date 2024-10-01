@@ -56,14 +56,14 @@ async function createLink() {
       loading.value = false
     } else {
       loading.value = true
-      const link = await $fetch(`${config.public.API_BASE_URL}/api/link`, {
-        method: 'POST',
+      const link = await $fetch(`/api/link`, {
+        method: "POST",
         body: { redirect: url.value, content: content.value }
       })
-      model.value = link?.data
-      toast.add({ severity: 'success', summary: 'Sucesso', detail: link?.message, life: 3150 })
+      model.value = link
+      toast.add({ severity: 'success', summary: 'Sucesso', detail: "Link Criado com sucesso", life: 3150 })
     }
-  } catch (error) {
+  } catch (error:any) {
     if (error.name == 'FetchError') {
       toast.add({ severity: 'error', summary: 'Erro no Serviço', detail: error.data.error, life: 3150 })
       console.dir(error)
